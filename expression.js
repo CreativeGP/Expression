@@ -1,5 +1,24 @@
-// Whole-script strict mode syntax
-// "use strict";
+"use strict";
+
+/*
+ ___    __  __  ___ __  __   __      
+|__ \_/|__)|__)|__ /__`/__`|/  \|\ | 
+|___/ \|   |  \|___.__/.__/|\__/| \| 
+
+Online math expression analyzer. Experience demo at http://cgp.php.xdomain.jp/lab/expr/
+
+https://github.com/CreativeGP/Expression
+(C) 2017 CGP.
+*/
+
+/*
+expression.js - Expression
+
+2017/11/25 (yyyy/mm/dd)
+Wrote by @CreativeGP1
+*/
+
+
 if (!Array.prototype.last){
     Array.prototype.last = function(){
         return this[this.length - 1];
