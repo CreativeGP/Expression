@@ -99,6 +99,27 @@ function lex2str(lex) {
     return Result;
 }
 
+// グラブを描く前準備としてgafを作って線を引きます
+const prepare_graph = () => {
+    let cp = new Coordinate_Plane($("gaf"), 600, 300);
+    cp.draw();
+    return cp.object;
+}
+
+/**
+  gaf exprを使って color でグラフを描きます。デフォルトとして青色を設定していますが、できるだけ
+  明示的に記述するほうが好ましいでしょう
+*/
+const draw_graph = (gaf, expr, color="blue") => {
+    let px, py;
+    for (let i = -150; i < 150; i++) {
+	const x = i+150;
+	const y = 150 - expr.evaluate({ x: x-150 });
+	if (0 <= x <= 300 && 0 <= y && y <= 300)
+	    gaf.draw_point(x, y, color);
+    }
+}
+
 function show_result(p) {
     // Showing math expression
     $("#visual-expr").html("$$"+p+"$$");
@@ -112,21 +133,11 @@ function show_result(p) {
 
     $("#result").css("display", "block");
 
-    // Draw graph.
     if (expr.variables().length > 1) return;
 
-    const gaf = new Gaf($("gaf"));
-    gaf.draw_rectangle(0, 150, 300, 1);
-    gaf.draw_rectangle(150, 0, 1, 300);
-
     // Draw graph
-    let px, py;
-    for (let i = -150; i < 150; i++) {
-	const x = i+150;
-	const y = 150 - expr.evaluate({ x: x-150 });
-	if (0 <= x <= 300 && 0 <= y && y <= 300)
-	    gaf.draw_point(x, y, "blue");
-    }
+    let gaf = prepare_graph();
+    draw_graph(gaf, expr, "blue");
 
     // Put red point according to the movement of the mouse.
     let old = null;
@@ -173,7 +184,14 @@ function show_variables(expr) {
 }
 
 function run(lex) {
-    show_result(lex);
+    if (lex.match(/=/g)) {
+	let expr_list = lex.split('=');
+	expr_list.forEach((v) => {
+	    
+	});
+    } else {
+	show_result(lex);
+    }
 }
 
 $(function() {
