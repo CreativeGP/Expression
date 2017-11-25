@@ -1,0 +1,14 @@
+#title {
+    color: black;
+    font-size: 150px;
+    font-family: 'Rozha One', serif;
+}
+
+#user {
+    font-family: 'Inconsolata', monospace;
+    font-size: 30px;
+}
+
+#visual-expr {
+    font-size: 50px;
+}
