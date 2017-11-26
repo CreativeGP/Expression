@@ -118,31 +118,7 @@ function show_result(p) {
     cp.draw();
     graphs.push(new Graph(cp, expr));
     graphs[graphs.length-1].draw("blue");
-
-    // Put red point according to the movement of the mouse.
-    // let old = null;
-    // let old2 = null;
-    // $("#graph").unbind('mousemove');
-    // $("#graph").mousemove(function(e) {
-    // 	let x = e.clientX-$("#graph").position().left;
-    // 	let y = e.clientY-$("#graph").position().top;
-    // 	let elmx = x;
-    // 	let elmy = 150 - expr.evaluate({ x: x-150 });
-    // 	if (old) {
-    // 	    old.remove();
-    // 	    old = null;
-    // 	}
-    // 	if (old2) {
-    // 	    old2.remove();
-    // 	    old2 = null;
-    // 	}
-    // 	if (0 < elmy && elmy < 300)
-    // 	    old = gaf.draw_letter(elmx, elmy, "("+(elmx-150)+","+(150-elmy)+")");
-    // 	else
-    // 	    old = gaf.draw_letter(elmx, 0, "("+(elmx-150)+","+(150-elmy)+")");
-    // 	if (0 < elmy && elmy < 300)
-    // 	    old2 = gaf.draw_ellipse(elmx, elmy, 5, 5, "red");
-    // });
+    graphs[graphs.length-1].set_trace_point();
 }
 
 function show_variables(expr) {
@@ -177,7 +153,7 @@ function run(lex) {
 $(function() {
     // global variables
     graphs = [];
-    cp = new Coordinate_Plane($("gaf"), 300, 300);
+    cp = new Coordinate_Plane($("#drawing"), 300, 300);
 
     $(document).on('keydown', function(e) {
 	// スラッシュ(/)が押された場合検索窓を選択して入力状態に

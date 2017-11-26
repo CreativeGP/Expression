@@ -110,10 +110,15 @@ Gaf_Triangle = function(vermap) {
     }
 }
 
-Gaf = function(root) {
+Gaf = function(root, width=-1, height=-1) {
     this.root = root;
     this.root.html("");
     this.root.css("position", "absolute");
+    this.root.parent().css("padding", "0");
+    if (width != -1)
+	this.root.parent().css("width", width);
+    if (height != -1)
+	this.root.parent().css("height", height);
     this.entities_count = 0;
 };
 

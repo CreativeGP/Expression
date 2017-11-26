@@ -24,7 +24,7 @@
 var Coordinate_Plane = function (object, width, height) {
     this.width = width;
     this.height = height;
-    this.gaf = new Gaf(object);
+    this.gaf = new Gaf(object, width, height);
 }
 Coordinate_Plane.prototype.hide =
     () => { object.css("display", "none"); }
@@ -37,21 +37,45 @@ Coordinate_Plane.prototype.draw = function () {
 }
 
 
-const Graph = function (cp, expr) {
+var Graph = function (cp, expr) {
     this.cp = cp;
     this.expr = expr;
 }
 Graph.prototype.draw = function (color="blue") {
     let px, py;
-    for (let i = -150; i < 150; i++) {
-	const x = i+150;
-	const y = 150 - this.expr.evaluate({ x: x-150 });
-	if (0 <= x <= 300 && 0 <= y && y <= 300)
+    for (let i = -this.cp.width/2; i < this.cp.width/2; i++) {
+	const x = i+this.cp.width/2;
+	const y = this.cp.width/2 - this.expr.evaluate({ x: x-this.cp.width/2 });
+	if (0 <= x <= this.cp.width && 0 <= y && y <= this.cp.width)
 	    this.cp.gaf.draw_point(x, y, color);
     }
 }
 
-
-
-
+Graph.prototype.set_trace_point = function (color="red") {
+    // Put red point according to the movement of the mouse.
+    let old = null;
+    let old2 = null;
+    let self = this;
+    this.cp.gaf.root.parent().unbind('mousemove');
+    this.cp.gaf.root.parent().mousemove((e) => {
+    	let x = e.clientX-$("#graph").position().left;
+    	let y = e.clientY-$("#graph").position().top;
+    	let elmx = x;
+    	let elmy = self.cp.width/2 - self.expr.evaluate({ x: x-self.cp.width/2 });
+    	if (old) {
+    	    old.remove();
+    	    old = null;
+    	}
+    	if (old2) {
+    	    old2.remove();
+    	    old2 = null;
+    	}
+    	if (0 < elmy && elmy < self.cp.height)
+    	    old = self.cp.gaf.draw_letter(elmx, elmy, "("+(elmx-self.cp.width/2)+","+(self.cp.height/2-elmy)+")");
+    	else
+    	    old = self.cp.gaf.draw_letter(elmx, 0, "("+(elmx-self.cp.width/2)+","+(self.cp.height/2-elmy)+")");
+    	if (0 < elmy && elmy < self.cp.height)
+    	    old2 = self.cp.gaf.draw_ellipse(elmx, elmy, 5, 5, color);
+    });
+}
 
