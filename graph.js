@@ -26,6 +26,18 @@ var Coordinate_Plane = function (object, width, height) {
     this.height = height;
     if (gaf)
 	this.gaf = new Gaf(object, width, height);
+    else {
+	// Create a Pixi Application and set up
+	// Usually WebGL is used
+	this.pixiapp = new PIXI.Application({
+	    width: this.width,
+	    height: this.height,
+	});
+	this.pixiapp.renderer.backgroundColor = 0xCCCCCC;
+
+	// Add the canvas that Pixi automatically created for you to the HTML document
+	document.getElementById("graph-wrapper").appendChild(this.pixiapp.view);
+    }
 }
 Coordinate_Plane.prototype.hide =
     () => { object.css("display", "none"); }
