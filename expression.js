@@ -118,7 +118,7 @@ function show_result(p) {
     // Draw graph
     cp.draw();
     graphs.push(new Graph(cp, expr));
-    graphs[graphs.length-1].draw("blue");
+    graphs[graphs.length-1].draw(0x0000FF);
     graphs[graphs.length-1].set_trace_point();
 }
 
@@ -173,29 +173,36 @@ $(function() {
 	}
 	if (e.keyCode == 27 && $("#fullscreen").is(":checked")) {
 	    $("#fullscreen").prop("checked", false);
+	    cp.destruct();
 	    cp = new Coordinate_Plane($("#drawing"), 300, 300);
 	    run(getParameterByName('p'));
 	    return false;
-p	}
+	}
     });
 
     $(window).on('resize', () => {
 	if ($("#fullscreen").is(":checked")) {
+	    cp.destruct();
 	    cp = new Coordinate_Plane($("#drawing"), $(window).width(), $(window).height());
-	    cp.gaf.root.parent().css("position", "fixed");
-	    cp.gaf.root.parent().css("top", "0px");
-	    cp.gaf.root.parent().css("left", "0px");
+	    let target = gaf ? cp.gaf.root.parent() : $("#result canvas");
+	    target.addClass("fullscreen");
+	    target.css("position", "fixed");
+	    target.css("top", "0px");
+	    target.css("left", "0px");
 	    run(getParameterByName('p'));
 	}
     });
 
     $(document).on('click', '#fullscreen', () => {
+	cp.destruct();
 	cp = new Coordinate_Plane($("#drawing"), $(window).width(), $(window).height());
-	cp.gaf.root.parent().css("position", "fixed");
-	cp.gaf.root.parent().css("z-index", "2147483647");
-	cp.gaf.root.parent().css("background-color", "#CCC");
-	cp.gaf.root.parent().css("top", "0px");
-	cp.gaf.root.parent().css("left", "0px");
+	let target = gaf ? cp.gaf.root.parent() : $("#result canvas");
+	target.addClass("fullscreen");
+	target.css("position", "fixed");
+	target.css("z-index", "2147483647");
+	target.css("background-color", "#CCC");
+	target.css("top", "0px");
+	target.css("left", "0px");
 	run(getParameterByName('p'));
     });
 
