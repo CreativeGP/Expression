@@ -63,7 +63,6 @@ Graph.prototype.set_trace_point = function (color="red") {
     let self = this;
     let parent;
     if (this.cp.gaf) parent = this.cp.gaf.root.parent();
-
     parent.unbind('mousemove');
     parent.mousemove((e) => {
     	let x = Math.floor(e.pageX)-Math.floor(parent.offset().left);

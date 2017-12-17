@@ -155,6 +155,9 @@ $(function() {
     // global variables
     graphs = [];
     cp = new Coordinate_Plane($("#drawing"), 300, 300);
+    
+    // If we wouldn't use Selfgaf, remove a div block to show Selfgaf
+    $('#graph').remove();
 
     $(document).on('keydown', function(e) {
 	// スラッシュ(/)が押された場合検索窓を選択して入力状態に
@@ -171,7 +174,7 @@ $(function() {
 	    cp = new Coordinate_Plane($("#drawing"), 300, 300);
 	    run(getParameterByName('p'));
 	    return false;
-	}
+p	}
     });
 
     $(window).on('resize', () => {
