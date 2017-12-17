@@ -165,19 +165,45 @@ $(function() {
 	    $("#go").click();
 	    return false;
 	}
+	if (e.keyCode == 27 && $("#fullscreen").is(":checked")) {
+	    $("#fullscreen").prop("checked", false);
+	    cp = new Coordinate_Plane($("#drawing"), 300, 300);
+	    run(getParameterByName('p'));
+	    return false;
+	}
     });
 
-    $(document).on('click', "#go", function() {
+    $(window).on('resize', () => {
+	if ($("#fullscreen").is(":checked")) {
+	    cp = new Coordinate_Plane($("#drawing"), $(window).width(), $(window).height());
+	    cp.gaf.root.parent().css("position", "fixed");
+	    cp.gaf.root.parent().css("top", "0px");
+	    cp.gaf.root.parent().css("left", "0px");
+	    run(getParameterByName('p'));
+	}
+    });
+
+    $(document).on('click', '#fullscreen', () => {
+	cp = new Coordinate_Plane($("#drawing"), $(window).width(), $(window).height());
+	cp.gaf.root.parent().css("position", "fixed");
+	cp.gaf.root.parent().css("z-index", "2147483647");
+	cp.gaf.root.parent().css("background-color", "#CCC");
+	cp.gaf.root.parent().css("top", "0px");
+	cp.gaf.root.parent().css("left", "0px");
+	run(getParameterByName('p'));
+    });
+
+    $(document).on('click', "#go", () => {
 	const thisurl = removeParameterFromURL(window.location.href);
 	location.href = thisurl + "?p="+encodeURIComponent($("#user").val());
     });
 
 
-    $(document).on("click", ".substitute", function(e) {
+    $(document).on("click", ".substitute", (e) => {
 	const base_expr_string = lex2str(getParameterByName('p'));
 	let expr = math.parse(base_expr_string);
 	let var_operation = '';
-	$("#variables div input").each(function (index, element) {
+	$("#variables div input").each((index, element) => {
 	    const varname = element.id.replace("input_", "");
 	    if (varname != '' && element.value != '')
 		expr = subst(expr, varname, element.value);

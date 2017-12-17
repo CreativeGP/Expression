@@ -14,6 +14,9 @@
 	<link href="font.css" rel="stylesheet">
 	<link href="pos.css" rel="stylesheet">
 
+	<!-- PIXI.js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.6.2/pixi.min.js"></script>
+
 	<!-- MathJax <http://www.mathjax.org/> -->
 	<script type="text/x-mathjax-config">
 	 MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ["\\(","\\)"]] } });
@@ -51,9 +54,12 @@
 			<div id="visual-expr"></div>
 			<div id="visual-base-expr"></div>
 		    </div>
-		    <div id="graph" style="width: 300px; height: 300px; padding: 0;" class="col-sm-6">
+		    <div class="col-sm-6">
 			<h3>■ GRAPH</h3>
-			<gaf id="drawing"></gaf>
+			<div id="graph" class="col-sm-6">
+			    <gaf id="drawing"></gaf>
+			</div>
+			<input type='checkbox' id='fullscreen'>FullScreen
 		    </div>
 		</div>
 		<div class="row">

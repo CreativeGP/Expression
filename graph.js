@@ -20,7 +20,7 @@
  * Wrote by @CreativeGP1
 */
 
-
+// 座標平面クラス
 var Coordinate_Plane = function (object, width, height) {
     this.width = width;
     this.height = height;
@@ -37,6 +37,7 @@ Coordinate_Plane.prototype.draw = function () {
 }
 
 
+// グラフ（線）クラス
 var Graph = function (cp, expr) {
     this.cp = cp;
     this.expr = expr;
@@ -45,7 +46,7 @@ Graph.prototype.draw = function (color="blue") {
     let px, py;
     for (let i = -this.cp.width/2; i < this.cp.width/2; i++) {
 	const x = i+this.cp.width/2;
-	const y = this.cp.width/2 - this.expr.evaluate({ x: x-this.cp.width/2 });
+	const y = this.cp.height/2 - this.expr.evaluate({ x: x-this.cp.width/2 });
 	if (0 <= x <= this.cp.width && 0 <= y && y <= this.cp.width)
 	    this.cp.gaf.draw_point(x, y, color);
     }
@@ -56,12 +57,13 @@ Graph.prototype.set_trace_point = function (color="red") {
     let old = null;
     let old2 = null;
     let self = this;
-    this.cp.gaf.root.parent().unbind('mousemove');
-    this.cp.gaf.root.parent().mousemove((e) => {
-    	let x = e.clientX-$("#graph").position().left;
-    	let y = e.clientY-$("#graph").position().top;
+    let parent = this.cp.gaf.root.parent();
+    parent.unbind('mousemove');
+    parent.mousemove((e) => {
+    	let x = Math.floor(e.pageX)-Math.floor(parent.offset().left);
+    	let y = Math.floor(e.pageY)-Math.floor(parent.offset().top);
     	let elmx = x;
-    	let elmy = self.cp.width/2 - self.expr.evaluate({ x: x-self.cp.width/2 });
+    	let elmy = self.cp.height/2 - self.expr.evaluate({ x: x-self.cp.width/2 });
     	if (old) {
     	    old.remove();
     	    old = null;
