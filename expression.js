@@ -21,6 +21,7 @@ Wrote by @CreativeGP1
 // global variables
 let graphs;
 let cp;
+const gaf = false;
 
 if (!Array.prototype.last){
     Array.prototype.last = function(){
